@@ -1,7 +1,8 @@
 import React from 'react'
 import {Box,AppBar,Toolbar,Typography, Button} from '@mui/material';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useNavigate } from 'react-router-dom';
-export const Header = () => {
+export const Header = ({logIn,name}) => {
   const navigate = useNavigate();
   return (
     <Box>
@@ -11,8 +12,17 @@ export const Header = () => {
             Todo Management System
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Button onClick = {() => navigate('/login')} variant="text" sx={{color : "white",fontSize : "20px"}}>Login</Button>
-          <Button onClick = {() => navigate('/register')} variant='text' sx={{color : "white",fontSize : "20px"}}>Register</Button>
+          {!logIn ?
+          <>
+            <Button onClick = {() => navigate('/login')} variant="text" sx={{color : "white",fontSize : "20px"}}>Login</Button>
+            <Button onClick = {() => navigate('/register')} variant='text' sx={{color : "white",fontSize : "20px"}}>Register</Button>
+          </>
+          :
+          <>
+            <AccountBoxIcon sx={{fontSize : "40px"}}/>
+            <Typography variant='h5'>{name}</Typography>
+          </>
+          }
         </Toolbar>
       </AppBar>
     </Box>
