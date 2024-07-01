@@ -9,3 +9,4 @@ export const updateTodo = (id,todo) => axios.put(REST_API_BASE_URL + "/" + id,to
 export const deleteTodo = (id) => axios.delete(REST_API_BASE_URL + "/" + id);
 export const addTodo = (todo) => axios.post(REST_API_BASE_URL,todo);
 export const logIn = (user) => axios.post(AUTH_URL + "/login",user);
+export const register = (user) => axios.post(AUTH_URL + "/register",user);

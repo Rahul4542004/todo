@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material'
+import { Button, TextField,Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { logIn } from '../Services/TodoService';
 import { useNavigate } from 'react-router-dom';
@@ -27,6 +27,7 @@ export const Login = ({setLogIn,setUsername}) => {
         <div style={{marginTop : "50px",display : "flex",flexDirection : "column",alignItems : "center",border : "solid black 2px",
                     width : "500px"
         }}>
+            <Typography variant='h3' sx={{color : "rgba(0,0,255,0.7)",marginBottom : "-10px",marginTop : "10px"}}>Login</Typography>
         <TextField
             name = "username"
             id = "username"
@@ -55,7 +56,7 @@ export const Login = ({setLogIn,setUsername}) => {
                 color : "blue"
             }
         }}>sign in</Button>
-        {flag && <p style = {{color : "red",marginBottom : "50px"}}>Incorrect email or password</p>}
+        {flag && <p style = {{color : "red",marginBottom : "50px"}}>Incorrect password</p>}
         </div>
         </center>
     </form>
