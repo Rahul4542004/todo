@@ -31,4 +31,9 @@ public class CustomUserDetails implements UserDetailsService {
                 authorities
         );
     }
+    public String getUsername(String usernameOrEmail) throws UsernameNotFoundException{
+        User user = userRepository.findByUsernameOrEmail(usernameOrEmail,usernameOrEmail).
+                orElseThrow(() -> new TodoNotFoundException(usernameOrEmail + " doesn't exist"));
+        return user.getUsername();
+    }
 }

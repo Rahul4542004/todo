@@ -20,9 +20,9 @@ export const Register = () => {
     <form>
       <center>
       <div style={{marginTop : "30px",display : "flex",flexDirection : "column",alignItems : "center",border : "solid black 2px",
-                    width : "500px",backgroundColor : "rgba(128,128,128,0.2)"
+                    width : "500px",backgroundColor : "lightgoldenrodyellow"
         }}>
-        <Typography variant='h3' sx={{color : "rgba(255,0,0,0.8)",marginBottom : "-10px",marginTop : "10px"}}>Register</Typography>
+        <Typography variant='h3' sx={{width : "inherit",color : "rgba(255,255,255,1.0)",marginBottom : "-10px",backgroundColor : "rgba(255,0,0,0.6)"}}>Register</Typography>
         <TextField 
           required
           autoFocus
