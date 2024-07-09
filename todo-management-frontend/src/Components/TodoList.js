@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { deleteTodo, getTodoList, markComplete, markIncomplete } from '../Services/TodoService.js';
+import {  checkRole, deleteTodo, getTodoList, markComplete, markIncomplete } from '../Services/TodoService.js';
 import { useEffect, useState } from 'react';
 
 export const TodoList = () => {
@@ -16,7 +16,6 @@ export const TodoList = () => {
   };
   
   const [todos, setTodos] = useState([]);
-  
   useEffect(() => {
     getTodoList().then((response) => setTodos(response.data)).catch(err => console.error(err));
   }, []);
@@ -37,11 +36,11 @@ export const TodoList = () => {
   
   return (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: "column" }}>
-      <Button variant="contained" sx={{ marginTop: '20px', transition: 'all', color: "white", backgroundColor: "black",
+      {checkRole() && <Button variant="contained" sx={{ marginTop: '20px', transition: 'all', color: "white", backgroundColor: "black",
         '&:hover': {
           backgroundColor: 'white',
           color: 'black'
-        }}} onClick={() => navigator("/add-todo")}>Add Todo</Button>
+        }}} onClick={() => navigator("/add-todo")}>Add Todo</Button>}
       <table style={{ border: 'solid black 2px', width: "1000px", marginTop: '20px', fontSize: '20px', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={tableCell}>
@@ -58,15 +57,20 @@ export const TodoList = () => {
               <td style={cell}>{todo.description}</td>
               <td style={cell}>{todo.completed ? "Yes" : "No"}</td>
               <td style={cell}>
+                { checkRole() &&
                 <Button onClick={() => navigator(`/update-todo/${todo.id}`)} variant="contained" sx={{ color: "orange", backgroundColor: "white",
                   '&:hover': { color: "white", backgroundColor: "orange" }
                 }}>Update</Button>
+              }
+              { checkRole() &&
                 <Button onClick={() => {
                   deleteTodo(todo.id).then(response => {
                     setTodos(todos.filter(t => t.id !== todo.id));
                     navigator('/todos');
                   }).catch(err => console.error(err));
-                }} sx={{ color: "red", backgroundColor: "white", '&:hover': { color: "white", backgroundColor: "red" } }} variant="contained">Delete</Button>
+                }} sx={{ color: "red", backgroundColor: "white", '&:hover': { 
+                  color: "white", backgroundColor: "red" } }} variant="contained">Delete</Button>
+                }
                 <Button onClick={() => handleComplete(todo.id)}
                   sx={{ color: "green", backgroundColor: "white", '&:hover': { color: "white", backgroundColor: "green" } }} variant="contained">Complete</Button>
                 <Button onClick={() => handleIncomplete(todo.id)}

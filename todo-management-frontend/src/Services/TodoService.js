@@ -4,9 +4,9 @@ const AUTH_URL = "http://localhost:8085/api/auth"
 
 export const getTodoList = () => axios.get(REST_API_BASE_URL);
 
-export const markComplete = (id) => axios.put(REST_API_BASE_URL + "/complete/" + id);
+export const markComplete = (id) => axios.patch(REST_API_BASE_URL + "/complete/" + id);
 
-export const markIncomplete = (id) => axios.put(REST_API_BASE_URL + "/incomplete/" + id);
+export const markIncomplete = (id) => axios.patch(REST_API_BASE_URL + "/incomplete/" + id);
 
 export const getTodo = (id) => axios.get(REST_API_BASE_URL + "/" + id);
 
@@ -31,7 +31,10 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 
-export const saveLoggedInUser = (username) => sessionStorage.setItem("authorizedUser",username);
+export const saveLoggedInUser = (username,role) => {
+  sessionStorage.setItem("authorizedUser",username);
+  sessionStorage.setItem("role",role);
+}
 
 export const isUserLoggedIn = () => {
   const user = sessionStorage.getItem("authorizedUser");
@@ -47,3 +50,7 @@ export const logout = () => {
 }
 
 export const getUsername = () => axios.get(AUTH_URL + "/username");
+export const checkRole = () => {
+  const role = sessionStorage.getItem("role");
+  return role==='ROLE_ADMIN';
+}

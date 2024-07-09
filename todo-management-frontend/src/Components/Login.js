@@ -12,7 +12,6 @@ export const Login = () => {
     const [nameError, setNameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const navigate = useNavigate();
-
     const validate = () => {
         let valid = true;
         if (name.trim() === '') {
@@ -42,10 +41,10 @@ export const Login = () => {
         await logIn(user).then(response => {
             console.log(response.data);
 
-            const token = 'Basic ' + window.btoa(name + ":" + password);
+            // const token = 'Basic ' + window.btoa(name + ":" + password);
+            const token = 'Bearer ' + response.data.accessToken;
             setToken(token);
-
-            saveLoggedInUser(name);
+            saveLoggedInUser(name,response.data.role);
             navigate('/todos');
 
             window.location.reload(false);
