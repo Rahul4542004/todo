@@ -30,15 +30,4 @@ public class AuthController {
         JwtAuthResponseDto token = authService.login(loginDto);
         return new ResponseEntity<>(token,HttpStatus.OK);
     }
-    @GetMapping("/username")
-    public ResponseEntity<String> getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails user = (UserDetails) authentication.getPrincipal();
-            String username = userDetails.getUsername(user.getUsername());
-            return ResponseEntity.ok(username);
-        } else {
-            return ResponseEntity.ok(authentication.getName());
-        }
-    }
 }

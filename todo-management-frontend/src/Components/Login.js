@@ -44,7 +44,7 @@ export const Login = () => {
             // const token = 'Basic ' + window.btoa(name + ":" + password);
             const token = 'Bearer ' + response.data.accessToken;
             setToken(token);
-            saveLoggedInUser(name,response.data.role);
+            saveLoggedInUser(response.data.username,response.data.role);
             navigate('/todos');
 
             window.location.reload(false);
