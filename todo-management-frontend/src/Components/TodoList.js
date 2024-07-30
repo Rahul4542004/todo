@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import {  checkRole, deleteTodo, getTodoList, markComplete, markIncomplete } from '../Services/TodoService.js';
+import {  checkRole, deleteTodo, getTodoList, markComplete, markIncomplete,isUserLoggedIn } from '../Services/TodoService.js';
 import { useEffect, useState } from 'react';
 
 export const TodoList = () => {
@@ -51,7 +51,7 @@ export const TodoList = () => {
           </tr>
         </thead>
         <tbody>
-          {todos.map(todo =>
+          {isUserLoggedIn() && todos.map(todo =>
             <tr key={todo.id}>
               <td style={cell}>{todo.title}</td>
               <td style={cell}>{todo.description}</td>

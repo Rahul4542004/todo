@@ -24,8 +24,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     JwtTokenProvider tokenProvider;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getTokenFromRequest(request);
-        if(StringUtils.hasText(token) && tokenProvider.validate(token)) {
+        String path = request.getRequestURI();
+        if (path.startsWith("/api/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        String bearerToken = request.getHeader("Authorization");
+        String token;
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer "))
+            token = bearerToken.substring(7);
+        else
+            token = null;
+        if(StringUtils.hasText(token) && tokenProvider.validate(token)){
             String username = tokenProvider.getUsername(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -37,12 +47,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
         filterChain.doFilter(request,response);
-    }
-    private String getTokenFromRequest(HttpServletRequest request){
-        String bearerToken = request.getHeader("Authorization");
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 }

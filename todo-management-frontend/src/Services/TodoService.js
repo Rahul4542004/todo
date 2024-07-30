@@ -48,8 +48,6 @@ export const logout = () => {
   localStorage.clear();
   window.location.reload(false);
 }
-
-export const getUsername = () => axios.get(AUTH_URL + "/username");
 export const checkRole = () => {
   const role = sessionStorage.getItem("role");
   return role==='ROLE_ADMIN';

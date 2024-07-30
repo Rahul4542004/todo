@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Box,AppBar,Toolbar,Typography, Button, Menu, MenuItem} from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
-import { getLoggedInUser, getUsername, isUserLoggedIn, logout } from '../Services/TodoService';
+import { getLoggedInUser, isUserLoggedIn, logout } from '../Services/TodoService';
 export const Header = () => {
   const isAuth = isUserLoggedIn();
   const [name,setName] = useState(null);
   const [anchorEl,setAnchorEl] = useState(null);
-  getUsername().then(response => setName(response.data));
+  useEffect(() => {
+    const username = getLoggedInUser();
+    setName(username);
+  },[])
   function handleMenuClick(e){
     setAnchorEl(e.currentTarget);
   }
